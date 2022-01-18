@@ -42,6 +42,10 @@ region = datasett.Location.unique().tolist()
 #List dari setiap kolom
 column_list = list(datasett.columns)
 
+#Khusus kasus indonesia
+datasett = data[data['Location'] == 'Indonesia']
+source = ColumnDataSource(datasett)
+
 #membuat figure plot
 fig = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
@@ -51,7 +55,13 @@ fig = figure(x_axis_type='datetime',
 #Definisikan y-axis
 fig.yaxis.formatter = NumeralTickFormatter(format="00")
 
+#definisi line
+fig.line('Date', 'Total Cases',
+                  color='color', legend_label='Total Kasus di Indonesia',
+                  source=source)
 
+#definisi legend
+fig.legend.location = 'top_right'
 
 tooltips= [
                      ('Date', '@date{%F}'),
